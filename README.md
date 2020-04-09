@@ -1,9 +1,9 @@
-## mtDNA_annotation_of_structure
+# mtDNA_annotation_of_structure
 
 
 
 
-  ### 1.) Functional gene annotation
+  ## 1.) Functional gene annotation
 ###### 针对植物线粒体基因组注释: Mitofy；可注释几乎真核生物所有的线粒体基因组：AGORA；注释植物叶绿体和线粒体：Geneious。
 ###### 1.1) 植物线粒体基因组注释: Mitofy
 ###### 1.1.1） 使用在线网址：http://dogma.ccbb.utexas.edu/mitofy/
@@ -33,7 +33,7 @@ $ less .stats
 
 
 
-  ### 2.) Identification of open reading frames
+  ## 2.) Identification of open reading frames
 ###### 1.）使用在线ORF：https://indra.mullins.microbiol.washington.edu/sms2/orf_find.html
 ###### 2.）使用ORFfinder脚本
 ###### 下载脚本
@@ -61,7 +61,7 @@ $ less orf_3.out
 
 
 
-  ### 3.) Repeat sequence analysis
+  ## 3.) Repeat sequence analysis
 ###### 3.1) 随机重复序列
 ###### 3.1.1） 使用在线软件 bibiserv2（https://bibiserv.cebitec.uni-bielefeld.de/reputer?id=reputer_view_submission） 进行识别和定位， 主要识别对象包括线粒体基因组的正向重复， 反向重复和回文重复， Minimal Repeat Size 设置为500， 即取500bp 为最小重复长度， 两条重复序列间的相似度要求达 99%以上。 可以视图。
 ###### 3.1.2）使用vmatch软件：分析结果同在线软件 bibiserv2
@@ -103,7 +103,7 @@ $ perl misa.pl tig_4.fasta
 
 
 
-  ### 4.) Search for MtDNA sequences homologous to ctDNA
+  ## 4.) Search for MtDNA sequences homologous to ctDNA
 $ conda create -n blast blast -y
 $ conda activate blast
 ###### 通过blastn搜索相应植物叶绿体基因组的叶绿体同源序列，具有70％的可信度，e值为1e-5。
@@ -119,6 +119,6 @@ $ less chloroplast_blast.out
 
 
 
-  ### 5.) Mitochondrial genome circle diagram
+  ## 5.) Mitochondrial genome circle diagram
 ###### 在线网站Genome Vx：http://wolfe.ucd.ie/GenomeVx/
 ###### 根据基因/重复序列/编码区域/手动输入需要格式的数据，然后绘图。或者输入Genbank格式的文件，生成基因组图。
