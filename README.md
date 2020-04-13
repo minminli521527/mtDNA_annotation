@@ -3,11 +3,13 @@
 
 
 * ## 1) Functional gene annotation
-###### 针对植物线粒体基因组注释: Mitofy；可注释几乎真核生物所有的线粒体基因组：AGORA；注释植物叶绿体和线粒体：Geneious。
+###### Annotation for plant mitochondrial genome: Mitofy; annotation of almost all mitochondrial genomes of eukaryotes: AGORA; annotation of plant chloroplasts and mitochondria: Geneious.
 - * ### 1.1) Plant mitochondrial genome annotation: Mitofy
-- * #### 1.1.1) 使用在线网址：http://dogma.ccbb.utexas.edu/mitofy/
-###### 线粒体基因组上一般分布着所有编码基因，概括来说包含编码呼吸链复合体 I、II、III、IV和 V，核糖体亚基，核糖体 RNA、转运 RNA 和细胞色素 c 等的基因。 这些基因具体为复合体 I 基因（nad1、 nad2、 nad3、 nad4、 nad4L、 nad5、 nad6、 nad7 和 nad9） 、 复合体II 基因（sdh3 和 sdh4） 、 复合体 III 基因（cob） 、 复合体 IV 基因（cox1、 cox2 和 cox3） 、复合体 V 基因（atp1、 atp4、 atp6、 atp8 和 atp9）、 细胞色素 c 生物合成基因（ccmB、 ccmC、ccmFc 和 ccmFn） 、 核糖体蛋白基因（rps1、 rps2、 rps3、 rps4、 rps7、 rps10、 rps11、 rps12、rps13、 rps14、 rps19、 rpl2、 rpl5、 rpl10 和 rpl16）、 核糖体 RNA 基因（rrn5、 rrnL 和 rrnS） 、tRNA 基因（trnN、 trnD、 trnC、 trnE、 trnQ、 trnH、 trnI、 trnK、 trnM、 trnfM、 trnF、 trnP、trnS、 trnW和 trnY） 以及编码类成熟酶的 matR 基因和编码转运子的 mttB 基因等。
-- * #### 1.1.2) Use mitofyX script
+- * #### 1.1.1) Mitofy
+###### Use online URL: http://dogma.ccbb.utexas.edu/mitofy/
+###### The mitochondrial genome is generally distributed with all coding genes, and in general contains genes encoding respiratory chain complexes I, II, III, IV, and V, ribosomal subunits, ribosomal RNA, transport RNA, and cytochrome c. These genes are specifically complex I genes (nad1, nad2, nad3, nad4, nad4L, nad5, nad6, nad7 and nad9), complex II genes (sdh3 and sdh4), complex III genes (cob), complex IV genes (Cox1, cox2 and cox3), complex V genes (atp1, atp4, atp6, atp8 and atp9), cytochrome c biosynthesis genes (ccmB, ccmC, ccmFc and ccmFn), ribosomal protein genes (rps1, rps2, rps3 , Rps4, rps7, rps10, rps11, rps12, rps13, rps14, rps19, rpl2, rpl5, rpl10, and rpl16), ribosomal RNA genes (rrn5, rrnL and rrnS), tRNA genes (trnN, trnD, trnC, trnD, trnC , TrnH, trnI, trnK, trnM, trnfM, trnF, trnP, trnS, trnW, and trnY), matR genes encoding mature enzymes and mttB genes encoding transporters, etc.
+
+- * #### 1.1.2) Using mitofyX script
 ###### Download script
 	$ wget https://github.com/jianzuoyi/mitofyX/archive/master.zip
 ###### or
@@ -18,11 +20,11 @@
 ###### Run the script. 
 ###### /etc/perl/blast_dbs/mt_genes is the folder of reference files that comes with it, tig_4.fasta is the sequence to be analyzed, and tig_4 is the prefix.
 	$ /etc/perl/mitofyX.pl --gene_db /etc/perl/blast_dbs/mt_genes tig_4.fasta tig_4
-###### 会报错，没有tig_4_tRNAscan.out文件，可以提前分析下一个步骤，将文件重命名为tig_4_tRNAscan.out，放在/blast_output/tig_4文件夹内，然后重新运行上面命令
+###### An error will be reported, there is no file tig_4_tRNAscan.out, could analyze the next step in advance, rename the file to tig_4_tRNAscan.out, put it in the /blast_output/tig_4 folder, and then rerun the above command.
 ###### Results folder：/blast_output/tig_4
 	$ ls /blast_output/tig_4
 - * ### 1.2) tRNAscan-SE identifies tRNA genes
-###### -O 适合于线粒体和叶绿体,选择该参数，则仅使用 Cove 进行分析，搜索速度会很慢，同时也不能给出 pseudogenes 检测。-C 仅使用 Cove 进行 tRNA 分析,虽然从一定程度上提高了准确性，但是会极慢，当然不建议了。-o <file> 将结果保存到文件。-f <file> 将 tRNA 的二级结构结果保存到文件。-m <file> 将统计结果保存到文件。
+###### Parameter analysis: -O is suitable for mitochondria and chloroplasts, when this parameter is selected, only Cove is used for analysis, the search speed will be very slow, and pseudogenes detection cannot be given. -C only uses Cove for tRNA analysis, although the accuracy is improved to a certain extent, it will be extremely slow, of course, it is not recommended. -o, <file> save the result to a file. -f <file>, save tRNA secondary structure results to a file. -m <file>, save statistical results to a file.
 	$ conda create -n trnascan-se trnascan-se -y
 	$ conda activate trnascan-se
 	$ tRNAscan-SE -o tRNA_2.out -f rRNA_2.ss -m tRNA_2.stats tig_2.fasta
@@ -35,10 +37,11 @@
 
 
 * ## 2) Identification of open reading frames
-- * ### 2.1) 使用在线ORF：https://indra.mullins.microbiol.washington.edu/sms2/orf_find.html
-- * ### 2.2) 使用ORFfinder脚本
-- * #### 2.2.1) 下载脚本
-###### 下载脚本
+- * ### 2.1) ORF
+###### Use online URL：https://indra.mullins.microbiol.washington.edu/sms2/orf_find.html
+- * ### 2.2) Using ORFfinder script
+- * #### 2.2.1) Download script
+###### Download script
 	$ wget ftp://ftp.ncbi.nlm.nih.gov/genomes/TOOLS/ORFfinder/linux-i64/ORFfinder.gz
 ###### 解压
 	$ gunzip ORFfinder.gz
