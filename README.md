@@ -43,21 +43,21 @@
 - * #### 2.2.1) Download script
 ###### Download script
 	$ wget ftp://ftp.ncbi.nlm.nih.gov/genomes/TOOLS/ORFfinder/linux-i64/ORFfinder.gz
-###### 解压
+###### Unzip
 	$ gunzip ORFfinder.gz
-###### 获取执行权限
+###### Get execution permission
 	$ sudo chmod 777 ORFfinder  
 	$ ./ORFfinder -h
-###### 先测试一下，什么都没有显示就表示一切配置OK
+###### First test it, everything is OK if nothing is displayed
 	$ ./ORFfinder -dryrun
 - * #### 2.2.2) Run
-###### 参数：-b 接一个整数，指定序列上从哪个位点开始翻译（begin）。-e 接一个整数，指定翻译到哪一个位点结束（end）。-c 接t/f（或true/false），指明序列是否是环形，默认是false。-g 接一个整数，指定是哪一套密码子（可选0-25，0表示起始位点为ATG的ORF，默认是0），大部分植物线粒体均使用通用密码子。-ml 接一个整数指定ORF的最小长度是多少个nt，默认值75。-n 接t/f（或true/false）指明是否忽略ORF里边的ORF(完全被包含的ORF)，默认为false。-out 接输出的文件名。-outfmt 接一个整数，如下（默认是0）：0 = list of ORFs in FASTA format, 1 = CDS in FASTA format, 2 = Text ASN.1, 3 = Feature table
+###### Parameter analysis: -b is followed by an integer, which specifies from which point on the sequence to begin translation (begin). -e is followed by an integer, which specifies the end of the translation. -c is connected to t / f (or true / false), indicating whether the sequence is circular, the default is false. -g followed by an integer, specify which set of codons (optional 0-25, 0 indicates that the starting site is the ORF of ATG, the default is 0), most plant mitochondria use common codons. -ml followed by an integer specifies the minimum length of ORF nt, the default value is 75. -n followed by t / f (or true / false) indicates whether to ignore the ORF (completely contained ORF) inside the ORF, the default is false. -out then output the file name. -outfmt followed by an integer, as follows (the default is 0): 0 = list of ORFs in FASTA format, 1 = CDS in FASTA format, 2 = Text ASN.1, 3 = Feature table
 	$ ./ORFfinder -in tig_4.fasta -out orf.out
 	$ . /ORFfinder -in tig_4.fasta -out orf_0.out -outfmt 0
 	$ ./ORFfinder -in tig_4.fasta -out orf_1.out -outfmt 1
 	$ ./ORFfinder -in tig_4.fasta -out orf_2.out -outfmt 2
 	$ ./ORFfinder -in tig_4.fasta -out orf_3.out -outfmt 3
-###### 查看结果：
+###### View Results:
 	$ less orf_0.out
 	$ less orf_1.out
 	$ less orf_2.out
@@ -67,44 +67,47 @@
 
 
 * ## 3) Repeat sequence analysis
-- * ### 3.1) 随机重复序列
-- * #### 3.1.1) 使用在线软件 bibiserv2（https://bibiserv.cebitec.uni-bielefeld.de/reputer?id=reputer_view_submission） 进行识别和定位， 主要识别对象包括线粒体基因组的正向重复， 反向重复和回文重复， Minimal Repeat Size 设置为500， 即取500bp 为最小重复长度， 两条重复序列间的相似度要求达 99%以上。 可以视图。
-- * #### 3.1.2) 使用vmatch软件：分析结果同在线软件 bibiserv2
-###### $ wget http://www.vmatch.de/distributions/vmatch-2.3.1-Linux_x86_64-64bit.tar.gz
+- * ### 3.1) Random repeating sequence
+- * #### 3.1.1) Online bibiserv2
+###### Use the online software bibiserv2, https://bibiserv.cebitec.uni-bielefeld.de/reputer?id=reputer_view_submission, to identify and locate the random repeating sequence, the main recognition objects include mitochondrial genome forward repeat, reverse repeat and palindrome repeat. Minimal Repeat Size is set to 500, that is, 500 bp is taken as the minimum repeat length, and the similarity between two repeated sequences is required to be more than 99%. Can view.
+- * #### 3.1.2) vmatch software
+###### The analysis results are the same as online software bibiserv2.
+###### wmatch software installation
 	$ conda create -n vmatch vmatch -y
 	$ conda activate vmatch
 	$ vmatch -help
-###### 构建索引
+###### build index
 	$ mkvtree -db tig_4.fasta -v -pl -sti1 -bwt -dna -bck -suf -lcp -tis -ois -skp
-###### 运行软件
-###### -d 正向直接匹配。-p 反向互补/回文序列。 -l 500 最小长度500。-best  99 两条重复序列间的相似度要求达 99%以上。
+###### run the software
+###### -d, Forward match. -p, reverse complementary / palindrome sequence. -l 500, the minimum length is 500. -best 99, the similarity between two repeated sequences is required to be more than 99%.
 	$ vmatch -d -p -h 3 -l 500 -best 99 -noscore -noidentity -absolute tig_4.fasta > tig_4_repeat.txt
 	$ less tig_4_repeat.txt
-- * #### 3.1.3) 通过BLASTN搜索以99％的可信度鉴定出大的重复序列（> 500-bp）
+- * #### 3.1.3) With 99% confidence, a large repeat sequence (> 500-bp) was identified by BLASTN search.
 	$ conda create -n blast blast -y
 	$ conda activate blast
 	$ makeblastdb -in tig_4.fasta -dbtype nucl -parse_seqids -hash_index
 	$ blastn -db tig_4.fasta -query tig_4.fasta -out tig_4_blast.out -outfmt 6 -perc_identity 99 -num_threads 8
-###### 结果文件：tig_4_blast.out
+###### the result file：tig_4_blast.out
 ###### 第一列为Query(递交序列)，第二列为数据库序列(目标序列subejct)，第三列为: identity，第四列为：比对长度，第五列为：错配数，第六列为：gap数，第七列和第八列为：Query开始碱基位置和结束碱基位置，第九列和第十列为：Subject开始碱基位置和结束碱基位置，第十一列为：期望值，第十二列为：比对得分
 	$ less tig_4_blast.out
 - * ### 3.2) 串联重复序列
 - * #### 3.2.1) 使用在线软件 Tandem Repeats Finder（http://tandem.bu.edu/trf/trf.basic.submit.html） 对串联重复序列进行分析和定位， 参数设置为默认。
 - * #### 3.2.2) 使用trf软件
-###### 安装trf软件
+###### trf software installation
 	$ conda create -n trf trf -y
 	$ conda activate trf
 	$ trf -h
-###### 用官网默认参数运行
+###### Run with official website default parameters.
 	$ trf tig_4.fasta 2 7 7 80 10 50 500 -f -d -m
-###### 结果文件：tig_4.fasta.2.7.7.80.10.50.500.1.html       tig_4.fasta.2.7.7.80.10.50.500.1.txt.html       tig_4.fasta.2.7.7.80.10.50.500.dat      tig_4.fasta.2.7.7.80.10.50.500.mask
+###### the result file：tig_4.fasta.2.7.7.80.10.50.500.1.html       tig_4.fasta.2.7.7.80.10.50.500.1.txt.html       tig_4.fasta.2.7.7.80.10.50.500.dat      tig_4.fasta.2.7.7.80.10.50.500.mask
 - * #### 3.2.3) 利用MISA软件对串联重复中的简单序列重复SSR（长度不小于 8bp 的 1-6 个碱基的重复） 做进一步分析，筛选单核苷酸，二核苷酸，三核苷酸，四核苷酸，五核苷酸和六核苷酸重复序列
 	$ wget https://webblast.ipk-gatersleben.de/misa/misa_sourcecode_22092015.zip
 	$ unzip misa_sourcecode_22092015.zip
-###### 解压后有两个文件：misa.ini   misa.pl，运行前放在一起
-###### misa.ini最小重复次数阈值分别设置为10、5、4、3、3和3 ， 并通过命令行： perl misa.pl <FASTAfile>进行分析。
+###### There are two files after decompression：misa.ini and misa.pl，put together before running.
+###### The thresholds of the minimum repeat times of misa.ini are set to 10, 5, 4, 3, 3 and 3, respectively, and analyzed through the command line: perl misa.pl <FASTAfile>.
+###### the result file：tig_4.fasta.statistics, mtDNA.gff, and tig_4.fasta.misa
 	$ perl misa.pl tig_4.fasta
-###### 结果文件：tig_4.fasta.statistics     mtDNA.gff      tig_4.fasta.misa
+
 
 
 
