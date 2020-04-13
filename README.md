@@ -4,29 +4,30 @@
 
 * ## 1) Functional gene annotation
 ###### 针对植物线粒体基因组注释: Mitofy；可注释几乎真核生物所有的线粒体基因组：AGORA；注释植物叶绿体和线粒体：Geneious。
-- * ### 1.1) 植物线粒体基因组注释: Mitofy
+- * ### 1.1) Plant mitochondrial genome annotation: Mitofy
 - * #### 1.1.1) 使用在线网址：http://dogma.ccbb.utexas.edu/mitofy/
 ###### 线粒体基因组上一般分布着所有编码基因，概括来说包含编码呼吸链复合体 I、II、III、IV和 V，核糖体亚基，核糖体 RNA、转运 RNA 和细胞色素 c 等的基因。 这些基因具体为复合体 I 基因（nad1、 nad2、 nad3、 nad4、 nad4L、 nad5、 nad6、 nad7 和 nad9） 、 复合体II 基因（sdh3 和 sdh4） 、 复合体 III 基因（cob） 、 复合体 IV 基因（cox1、 cox2 和 cox3） 、复合体 V 基因（atp1、 atp4、 atp6、 atp8 和 atp9）、 细胞色素 c 生物合成基因（ccmB、 ccmC、ccmFc 和 ccmFn） 、 核糖体蛋白基因（rps1、 rps2、 rps3、 rps4、 rps7、 rps10、 rps11、 rps12、rps13、 rps14、 rps19、 rpl2、 rpl5、 rpl10 和 rpl16）、 核糖体 RNA 基因（rrn5、 rrnL 和 rrnS） 、tRNA 基因（trnN、 trnD、 trnC、 trnE、 trnQ、 trnH、 trnI、 trnK、 trnM、 trnfM、 trnF、 trnP、trnS、 trnW和 trnY） 以及编码类成熟酶的 matR 基因和编码转运子的 mttB 基因等。
-- * #### 1.1.2) 使用mitofyX脚本
-###### 下载脚本
+- * #### 1.1.2) Use mitofyX script
+###### Download script
 	$ wget https://github.com/jianzuoyi/mitofyX/archive/master.zip
 ###### or
 	$ git clone https://github.com/jianzuoyi/mitofyX.git
 	$ cd mitofyX
-###### 将此文件夹内的所有文件复制到文件夹/etc/perl中，否则会报错
+###### Copy all the files in this folder to the folder /etc/perl, otherwise an error will be reported.
 	$ sudo cp * /etc/perl
-###### 运行脚本。/etc/perl/blast_dbs/mt_genes是自带的参考文件的文件夹，tig_4.fasta是要分析的序列，tig_4是前缀。
+###### Run the script. 
+###### /etc/perl/blast_dbs/mt_genes is the folder of reference files that comes with it, tig_4.fasta is the sequence to be analyzed, and tig_4 is the prefix.
 	$ /etc/perl/mitofyX.pl --gene_db /etc/perl/blast_dbs/mt_genes tig_4.fasta tig_4
 ###### 会报错，没有tig_4_tRNAscan.out文件，可以提前分析下一个步骤，将文件重命名为tig_4_tRNAscan.out，放在/blast_output/tig_4文件夹内，然后重新运行上面命令
-###### 结果文件夹：/blast_output/tig_4
+###### Results folder：/blast_output/tig_4
 	$ ls /blast_output/tig_4
-- * ### 1.2) tRNAscan-SE鉴定tRNA基因
+- * ### 1.2) tRNAscan-SE identifies tRNA genes
 ###### -O 适合于线粒体和叶绿体,选择该参数，则仅使用 Cove 进行分析，搜索速度会很慢，同时也不能给出 pseudogenes 检测。-C 仅使用 Cove 进行 tRNA 分析,虽然从一定程度上提高了准确性，但是会极慢，当然不建议了。-o <file> 将结果保存到文件。-f <file> 将 tRNA 的二级结构结果保存到文件。-m <file> 将统计结果保存到文件。
 	$ conda create -n trnascan-se trnascan-se -y
 	$ conda activate trnascan-se
 	$ tRNAscan-SE -o tRNA_2.out -f rRNA_2.ss -m tRNA_2.stats tig_2.fasta
 	$ tRNAscan-SE -O -o tRNA.out -f rRNA.ss -m tRNA.stats tig_2.fasta
-###### 主要结果在*.out中:
+###### The main result is in * .out:
 	$ less .out
 	$ less .ss
 	$ less .stats
