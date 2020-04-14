@@ -114,6 +114,7 @@
 
 
 * ## 4) Search for MtDNA sequences homologous to ctDNA
+###### blast software installation
 	$ conda create -n blast blast -y
 	$ conda activate blast
 ###### Search for the chloroplast homologous sequence of the corresponding plant by blastn, with 70% confidence, and the e value is 1e-5.
