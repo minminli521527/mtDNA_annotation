@@ -82,7 +82,8 @@
 ###### -d, Forward match. -p, reverse complementary / palindrome sequence. -l 500, the minimum length is 500. -best 99, the similarity between two repeated sequences is required to be more than 99%.
 	$ vmatch -d -p -h 3 -l 500 -best 99 -noscore -noidentity -absolute tig_4.fasta > tig_4_repeat.txt
 	$ less tig_4_repeat.txt
-- * #### 3.1.3) With 99% confidence, a large repeat sequence (> 500-bp) was identified by BLASTN search.
+- * #### 3.1.3) running blast
+###### With 99% confidence, a large repeat sequence (> 500-bp) was identified by BLASTN search.
 	$ conda create -n blast blast -y
 	$ conda activate blast
 	$ makeblastdb -in tig_4.fasta -dbtype nucl -parse_seqids -hash_index
