@@ -88,11 +88,11 @@
 	$ makeblastdb -in tig_4.fasta -dbtype nucl -parse_seqids -hash_index
 	$ blastn -db tig_4.fasta -query tig_4.fasta -out tig_4_blast.out -outfmt 6 -perc_identity 99 -num_threads 8
 ###### the result file：tig_4_blast.out
-###### 第一列为Query(递交序列)，第二列为数据库序列(目标序列subejct)，第三列为: identity，第四列为：比对长度，第五列为：错配数，第六列为：gap数，第七列和第八列为：Query开始碱基位置和结束碱基位置，第九列和第十列为：Subject开始碱基位置和结束碱基位置，第十一列为：期望值，第十二列为：比对得分
+###### The first column is Query (submission sequence), the second column is the database sequence (target sequence subejct), the third column is: identity, the fourth column is: comparison length, the fifth column is: mismatch number, the sixth column For: gap number, the seventh and eighth columns are: Query start base position and end base position, the ninth and tenth columns are: Subject start base position and end base position, the eleventh column is : Expected value, the twelfth column is: Comparison score.
 	$ less tig_4_blast.out
 - * ### 3.2) tandem repeat
 - * #### 3.2.1) Use online software
-###### Tandem Repeats Finder（http://tandem.bu.edu/trf/trf.basic.submit.html） , 参数设置为默认。analyze and locate the tandem repeat sequence, the parameter setting is the default.
+###### Tandem Repeats Finder（http://tandem.bu.edu/trf/trf.basic.submit.html） , the parameters are set to default, analyze and locate the tandem repeat sequence, the parameter setting is the default.
 - * #### 3.2.2) using trf software
 ###### trf software installation
 	$ conda create -n trf trf -y
@@ -100,8 +100,9 @@
 	$ trf -h
 ###### Run with official website default parameters.
 	$ trf tig_4.fasta 2 7 7 80 10 50 500 -f -d -m
-###### the result file：tig_4.fasta.2.7.7.80.10.50.500.1.html       tig_4.fasta.2.7.7.80.10.50.500.1.txt.html       tig_4.fasta.2.7.7.80.10.50.500.dat      tig_4.fasta.2.7.7.80.10.50.500.mask
-- * #### 3.2.3) 利用MISA软件对串联重复中的简单序列重复SSR（长度不小于 8bp 的 1-6 个碱基的重复） 做进一步分析，筛选单核苷酸，二核苷酸，三核苷酸，四核苷酸，五核苷酸和六核苷酸重复序列
+###### the result file：tig_4.fasta.2.7.7.80.10.50.500.1.html, tig_4.fasta.2.7.7.80.10.50.500.1.txt.html, tig_4.fasta.2.7.7.80.10.50.500.dat      tig_4.fasta.2.7.7.80.10.50.500.mask
+- * #### 3.2.3) Simple sequence repeat SSR
+###### Use the MISA software to further analyze the simple sequence repeat SSR (repetition of 1-6 bases with a length of not less than 8bp) in tandem repeats, screening for single nucleotides, dinucleotides, trinucleotides, and tetranucleosides Acid, pentanucleotide and hexanucleotide repeats.
 	$ wget https://webblast.ipk-gatersleben.de/misa/misa_sourcecode_22092015.zip
 	$ unzip misa_sourcecode_22092015.zip
 ###### There are two files after decompression：misa.ini and misa.pl，put together before running.
@@ -121,9 +122,9 @@
 ###### running blast
 ###### Parameter analysis: -db: is the genome file used to build the database. -out: the file name of the output file. -evalue: screening criteria (the lower the evalue, the higher the similarity). -perc_identity 70: similarity is greater than 70. -query: input file path and file name. -out: output file path and file name. -outfmt: output file format, a total of 12 formats, 6 is the tabular format corresponding to BLAST m8 format. -num_threads: number of threads.
 ###### See the description of the result file：http://www.omicsclass.com/article/505
-  $ blastn -db chloroplast.fasta -query tig_4.fasta -out chloroplast_blast.out -outfmt 6 -evalue 1e-5 -perc_identity 70 -num_threads 8
+	$ blastn -db chloroplast.fasta -query tig_4.fasta -out chloroplast_blast.out -outfmt 6 -evalue 1e-5 -perc_identity 70 -num_threads 8
 ###### The result file：chloroplast_blast.out
-  $ less chloroplast_blast.out
+	$ less chloroplast_blast.out
 
 
 
