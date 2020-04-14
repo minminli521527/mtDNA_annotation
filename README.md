@@ -90,9 +90,10 @@
 ###### the result file：tig_4_blast.out
 ###### 第一列为Query(递交序列)，第二列为数据库序列(目标序列subejct)，第三列为: identity，第四列为：比对长度，第五列为：错配数，第六列为：gap数，第七列和第八列为：Query开始碱基位置和结束碱基位置，第九列和第十列为：Subject开始碱基位置和结束碱基位置，第十一列为：期望值，第十二列为：比对得分
 	$ less tig_4_blast.out
-- * ### 3.2) 串联重复序列
-- * #### 3.2.1) 使用在线软件 Tandem Repeats Finder（http://tandem.bu.edu/trf/trf.basic.submit.html） 对串联重复序列进行分析和定位， 参数设置为默认。
-- * #### 3.2.2) 使用trf软件
+- * ### 3.2) tandem repeat
+- * #### 3.2.1) Use online software
+###### Tandem Repeats Finder（http://tandem.bu.edu/trf/trf.basic.submit.html） , 参数设置为默认。analyze and locate the tandem repeat sequence, the parameter setting is the default.
+- * #### 3.2.2) using trf software
 ###### trf software installation
 	$ conda create -n trf trf -y
 	$ conda activate trf
@@ -113,21 +114,21 @@
 * ## 4) Search for MtDNA sequences homologous to ctDNA
 	$ conda create -n blast blast -y
 	$ conda activate blast
-###### 通过blastn搜索相应植物叶绿体基因组的叶绿体同源序列，具有70％的可信度，e值为1e-5。
-###### 构建核酸BLAST数据库
-###### -in参数后面接将要格式化的数据库，-parse_seqids, -hash_index两个参数一般都带上，主要是为blastdbcmd取子序列时使用，-dbtype nucl告诉程序这是核酸数据库
+###### Search for the chloroplast homologous sequence of the corresponding plant by blastn, with 70% confidence, and the e value is 1e-5.
+###### building a nucleic acid BLAST database
+###### -in, is followed by the database to be formatted; -parse_seqids and -hash_index are generally taken, mainly used when taking subsequences for blastdbcmd, -dbtype nucl, tells the program that this is a nucleic acid database.
 	$ makeblastdb -in chloroplast.fasta -dbtype nucl -parse_seqids -hash_index
-###### 运行blast
-###### 参数：-db：为前面用于建库的基因组文件。-out：为输出文件的文件名。-evalue：为筛选标准(evalue越低，相似性越高)。-perc_identity 70 : 相似度大于70。-query： 输入文件路径及文件名；-out：输出文件路径及文件名。-outfmt：输出文件格式，总共有12种格式，6是tabular格式对应BLAST的m8格式。-num_threads：线程数。
-###### 结果文件说明见：http://www.omicsclass.com/article/505
+###### running blast
+###### Parameter analysis: -db: is the genome file used to build the database. -out: the file name of the output file. -evalue: screening criteria (the lower the evalue, the higher the similarity). -perc_identity 70: similarity is greater than 70. -query: input file path and file name. -out: output file path and file name. -outfmt: output file format, a total of 12 formats, 6 is the tabular format corresponding to BLAST m8 format. -num_threads: number of threads.
+###### See the description of the result file：http://www.omicsclass.com/article/505
   $ blastn -db chloroplast.fasta -query tig_4.fasta -out chloroplast_blast.out -outfmt 6 -evalue 1e-5 -perc_identity 70 -num_threads 8
-###### 结果文件：chloroplast_blast.out
+###### The result file：chloroplast_blast.out
   $ less chloroplast_blast.out
 
 
 
 * ## 5) Mitochondrial genome circle diagram
-###### 在线网站Genome Vx：http://wolfe.ucd.ie/GenomeVx/
-###### 根据基因/重复序列/编码区域/手动输入需要格式的数据，然后绘图。或者输入Genbank格式的文件，生成基因组图。
+###### Online website Genome Vx：http://wolfe.ucd.ie/GenomeVx/
+###### According to the gene / repeated sequence / coding region /, manually input the data in the required format, and then draw. Or enter a Genbank format file to generate a genome map.
 
 
